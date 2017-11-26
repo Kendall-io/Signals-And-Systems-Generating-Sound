@@ -9,5 +9,55 @@ This project looked at the frequencies of musical notes. These musical notes is 
 what is listened to, but also to what is heard everyday. In this project, certain frequencies were 
 used to recreate any original audio.
 
+## Usage
+### Prerequisites:
+- Python3
+- pip
+- virtualenv
+- scipy
+
+If all prerequisites are fulfilled skip to execution of code.
+#### Installation of pre-requisites (Linux Machines [Debian/Ubuntu Systems])
+1. If python3 isn't installed on your machine, use your package manager to install it.
+
+```
+sudo apt install python3
+```
+
+2. Install virtualenv
+
+```
+pip install virtualenv
+```
+If there is some error when installing virtualenv about permissions being denied, add --user
+
+```
+pip install virtualenv --user
+```
+
+3. Create Virtual Environment
+
+```
+virtualenv [insert_name_here]
+```
+
+4. Activate Virtual Environment
+
+```
+source [insert_name_here]/bin/activate
+```
+
+5. Install scipy
+
+```
+pip install scipy
+```
+
+6. Execute code
+
+```
+python soviet.py
+```
+
 ## Future goals:
 - Make it work
