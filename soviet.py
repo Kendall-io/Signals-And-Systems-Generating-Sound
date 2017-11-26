@@ -1,3 +1,4 @@
+## Authors: Kendall Molas, Daler Norkulov
 from scipy import signal
 from scipy.io.wavfile import write
 import numpy as np
@@ -17,7 +18,7 @@ A4_freq = 440.00
 F4_freq = 349.23
 E4_freq = 329.63
 C4_freq = 261.63 
-
+s
 # Time signature of music sheet
 time_signature = 1
 
@@ -52,9 +53,11 @@ measure_2_note_6 = signal.chirp(sampling_time, C4_freq, eighth_note, C4_freq)
 total_measures = np.concatenate(measure_1_note_1, measure_1_note_2, measure_1_note_3, measure_1_note_4,
  measure_1_note_5, measure_1_note_6, measure_2_note_1, measure_2_note_2, measure_2_note_3, measure_2_note_4,
   measure_2_note_5, measure_2_note_6)
+  
 ##
 # This function creates array to be processed
 # @Returns: array with notes that are in ndarray format
+# This don't work, don't know what approach to take
 '''
 def create_measures():
 	total_measures = []
@@ -68,10 +71,9 @@ def create_measures():
 	return np.array(total_measures)
 '''
 
-#sampletimes = np.linspace(0.0, chirp_time_s, chirp_time_s*sampleRate)
-#print(sampletimes)
-#chirpdata = signal.chirp(sampletimes, chirp_start_hz, 1, chirp_end_hz)
-audio_chirp = np.interp(total_measures, [-1.0, 1.0], [-1*2**15, 2**15-1]).astype(np.int16)
+# Give discrete data points which is necessary
+audio = np.interp(total_measures, [-1.0, 1.0], [-1*2**15, 2**15-1]).astype(np.int16)
 
-write("USSR.py", 44100, total_measures)
+## Output audio clip from frequencies
+write("USSR.py", 44100, audio)
 
