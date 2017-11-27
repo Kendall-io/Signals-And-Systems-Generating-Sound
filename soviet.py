@@ -19,9 +19,6 @@ F4_freq = 349.23
 E4_freq = 329.63
 C4_freq = 261.63 
 
-# Duration of output wav file
-time_playing = 10
-
 '''
 Time signature is a 4|4 so each note have specific durations
 quarter note: 1s
@@ -36,8 +33,6 @@ eighth_note_with_dot = 0.75
 sixteenth_note = 0.25
 
 # Creates a numpy array with parameters: start, end, number of samples to generate (amount of time sound plays)
-sampling_time = np.linspace(0.0, time_playing, time_playing*sampling_rate)
-
 # Creation of numpy arrays that will allow the notes to play for the specific durations
 quarter_note_sampling_time = np.linspace(0, quarter_note, quarter_note*sampling_rate)
 eighth_note_with_dot_sampling_time = np.linspace(0, eighth_note_with_dot, eighth_note_with_dot*sampling_rate)
@@ -71,4 +66,3 @@ audio = np.interp(total_measures, [-1.0, 1.0], [-1*2**15, 2**15-1]).astype(np.in
 
 ## Output audio clip from frequencies
 write("USSR.wav", 44100, audio)
-
