@@ -61,3 +61,8 @@ python soviet.py
 
 ## Future goals:
 - Make it work
+
+## Credit:
+
+Thank you to Helsinki Lab for sample code.
+https://github.com/HelsinkiHacklab/ledmatrix/blob/50c9538b6dc0a45287029f377c30415d35ab7a99/pyaudio_tests/chirp.py
