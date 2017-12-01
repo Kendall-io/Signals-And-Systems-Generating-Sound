@@ -84,15 +84,18 @@ plot(time_sampled, audio)
 grid(True)
 ylabel('y(t)')
 xlabel('Time (s)')
-show()
+#show()
 
 # Frequency graph
-'''
+from scipy.fftpack import fft, ifft
+
 frequency_signal = signal.resample(audio, np.size(audio)) 
-print(frequency_signal.size)
+#print(frequency_signal.size)
 #frequency_signal = signal.spectrogram(audio)
 #matplotlib.axes.Axes.pcolormesh(frequency_signal)
-subplot(2,1,1)
-plot(sampling_rate, frequency_signal)
+x = fft(frequency_signal)
+print(x)
+subplot(2,1,2)
+plot(time_sampled, x)
 show()
-'''
+
