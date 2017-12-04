@@ -79,13 +79,13 @@ time_sampled_for_frequency_graph = np.linspace(0, sampling_rate, np.size(total_m
 
 ##
 # Plotting
-fig, (time_plot, frq_plot) = plt.subplots(2,1, sharex=False, sharey=False, figsize=(15,15))
-
+fig, (time_plot, frq_plot, spectogram_plot) = plt.subplots(3,1, sharex=False, sharey=False, figsize=(5,5))
+plt.tight_layout()
 #
 # Because there is sound constantly playing, the output of this time graph will look like a blue signal
 # Time graph
 time_plot.plot(time_sampled_for_time_graph, total_measures)
-time_plot.set_xlabel("Time (s)")
+time_plot.set_xlabel("Time (sec)")
 time_plot.set_ylabel("Amplitude")
 
 # Frequency graph
@@ -95,4 +95,13 @@ frq_plot.plot(time_sampled_for_frequency_graph, x, 'r')
 frq_plot.set_xlabel("Frequency (Hz)")
 frq_plot.set_ylabel("|Y(jw)|")
 
+f, t, Sxx = signal.spectrogram(total_measures, sampling_rate)
+spectogram_plot.pcolormesh(t,f,Sxx)
+spectogram_plot.set_ylabel("Frequency (Hz)")
+spectogram_plot.set_xlabel("Time (sec)")
 show()
+
+# Spectrogram
+plt.pcolormesh(t,f, Sxx)
+
+#plt.show()
