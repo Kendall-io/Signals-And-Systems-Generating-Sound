@@ -15,6 +15,7 @@ used to recreate any original audio.
 - pip
 - virtualenv
 - scipy
+- tkinter
 
 If all prerequisites are fulfilled skip to execution of code.
 #### Installation of pre-requisites (Linux Machines [Debian/Ubuntu Systems])

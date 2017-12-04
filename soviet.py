@@ -3,7 +3,9 @@ from scipy import signal
 from scipy.io.wavfile import write
 from pylab import figure, plot, show, xlabel, ylabel, subplot, grid, title, yscale, savefig, clf, pcolormesh
 import matplotlib.axes
+import matplotlib.pyplot as plt
 import numpy as np
+from scipy.fftpack import fft, rfft
 
 ##
 # Standard sampling rate of audio cds.
@@ -62,40 +64,35 @@ total_measures = np.hstack((measure_1_note_1, measure_1_note_2, measure_1_note_3
 measure_1_note_5, measure_1_note_6, measure_2_note_1, measure_2_note_2, measure_2_note_3, measure_2_note_4, 
 measure_2_note_5, measure_2_note_6))
 
-# Convert from continuous to discrete by returning discrete data points
-# Use of int16 at the end to prevent noise and within frequency range of 20khz
-audio = np.interp(total_measures, [-1.0, 1.0], [-1*2**15, 2**15-1]).astype(np.int16)
-
 # Output audio clip from frequencies
-write("USSR.wav", 44100, audio)
+# Measures are all in continuous time already, so no need to multiply by 2.
+write("USSR.wav", sampling_rate, total_measures)
 
-## Plotting
-output_image_size = (7.5,3.75)
-figure(1, output_image_size)
-clf()
+# Duration of the created song
+song_duration = np.size(total_measures)/sampling_rate
+
+# X axis for the time based graph
+time_sampled_for_time_graph = np.linspace(0, song_duration, np.size(total_measures))
+
+# X axis for the frequency based graph
+time_sampled_for_frequency_graph = np.linspace(0, sampling_rate, np.size(total_measures))
 
 ##
-# Because there is sound constantly playing, the output of this time graph will look like a blue signal
-time_sampled = np.linspace(0, 8, np.size(audio))
+# Plotting
+fig, (time_plot, frq_plot) = plt.subplots(2,1, sharex=False, sharey=False, figsize=(15,15))
 
+#
+# Because there is sound constantly playing, the output of this time graph will look like a blue signal
 # Time graph
-subplot(2,1,1)
-plot(time_sampled, audio)
-grid(True)
-ylabel('y(t)')
-xlabel('Time (s)')
-#show()
+time_plot.plot(time_sampled_for_time_graph, total_measures)
+time_plot.set_xlabel("Time (s)")
+time_plot.set_ylabel("Amplitude")
 
 # Frequency graph
-from scipy.fftpack import fft, ifft
+frequency_signal = signal.resample(total_measures, np.size(total_measures))
+x = abs(fft(total_measures))
+frq_plot.plot(time_sampled_for_frequency_graph, x, 'r')
+frq_plot.set_xlabel("Frequency (Hz)")
+frq_plot.set_ylabel("|Y(jw)|")
 
-frequency_signal = signal.resample(audio, np.size(audio)) 
-#print(frequency_signal.size)
-#frequency_signal = signal.spectrogram(audio)
-#matplotlib.axes.Axes.pcolormesh(frequency_signal)
-x = fft(frequency_signal)
-print(x)
-subplot(2,1,2)
-plot(time_sampled, x)
 show()
-
