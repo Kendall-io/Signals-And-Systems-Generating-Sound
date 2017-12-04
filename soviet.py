@@ -1,7 +1,6 @@
 ## Authors: Daler Norkulov, Kendall Molas
 from scipy import signal
 from scipy.io.wavfile import write
-from pylab import figure, plot, show, xlabel, ylabel, subplot, grid, title, yscale, savefig, clf, pcolormesh
 import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
@@ -81,27 +80,27 @@ time_sampled_for_frequency_graph = np.linspace(0, sampling_rate, np.size(total_m
 # Plotting
 fig, (time_plot, frq_plot, spectogram_plot) = plt.subplots(3,1, sharex=False, sharey=False, figsize=(5,5))
 plt.tight_layout()
+
 #
 # Because there is sound constantly playing, the output of this time graph will look like a blue signal
-# Time graph
+# Time Domain Graph
 time_plot.plot(time_sampled_for_time_graph, total_measures)
 time_plot.set_xlabel("Time (sec)")
 time_plot.set_ylabel("Amplitude")
 
-# Frequency graph
-frequency_signal = signal.resample(total_measures, np.size(total_measures))
+#
+# Frequency Graph
 x = abs(fft(total_measures))
 frq_plot.plot(time_sampled_for_frequency_graph, x, 'r')
 frq_plot.set_xlabel("Frequency (Hz)")
 frq_plot.set_ylabel("|Y(jw)|")
 
+#
+# Spectrogram graph
 f, t, Sxx = signal.spectrogram(total_measures, sampling_rate)
+
+# Plots quadrilateral mesh
 spectogram_plot.pcolormesh(t,f,Sxx)
 spectogram_plot.set_ylabel("Frequency (Hz)")
 spectogram_plot.set_xlabel("Time (sec)")
-show()
-
-# Spectrogram
-plt.pcolormesh(t,f, Sxx)
-
-#plt.show()
+plt.show()
